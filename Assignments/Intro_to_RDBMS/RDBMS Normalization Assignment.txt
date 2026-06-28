@@ -1,0 +1,70 @@
+ASSIGNMENT: RDBMS NORMALIZATION
+
+QUESTION 1:
+Observe the structure of the given EMPLOYEE table:
+EMPNO, ENAME, SAL, DEPTNO, DNAME, LOC
+
+Suggest if this table can be further Normalized. Explain what normal form this table is in and how you can make this into the next normal form.
+
+ANSWER:
+1. Current Status:
+The table is currently in 2nd Normal Form (2NF).
+- It is in 1NF because all values are single (atomic).
+- It is in 2NF because the primary key (EMPNO) is a single column, so there are no partial dependencies.
+
+2. The Problem:
+There is a "Transitive Dependency". This means that DNAME (Department Name) and LOC (Location) actually depend on DEPTNO, not directly on the EMPNO.
+
+3. Solution (Moving to 3rd Normal Form - 3NF):
+To fix this, we split the table into two separate tables:
+
+Table A: EMPLOYEE
+Columns: EMPNO, ENAME, SAL, DEPTNO
+(Here, DEPTNO acts as a link/Foreign Key)
+
+Table B: DEPARTMENT
+Columns: DEPTNO, DNAME, LOC
+(Here, DEPTNO is the Primary Key)
+
+---------------------------------------------------------
+
+QUESTION 2:
+Observe the structure of the given STUDENT table:
+ROLL_NO, NAME, BRANCH, HOD, OFFICE_TEL
+
+Suggest how to normalize this table if HOD and OFFICE_TEL depend on the BRANCH.
+
+ANSWER:
+1. Current Status:
+The table has a Transitive Dependency because HOD and OFFICE_TEL depend on the BRANCH, and BRANCH depends on the ROLL_NO.
+
+2. Solution (Moving to 3rd Normal Form - 3NF):
+We split the table to remove redundancy:
+
+Table A: STUDENT_INFO
+Columns: ROLL_NO, NAME, BRANCH
+
+Table B: BRANCH_DETAILS
+Columns: BRANCH, HOD, OFFICE_TEL
+
+---------------------------------------------------------
+
+QUESTION 3:
+Observe the structure of the given PROJECT table:
+EMPNO, PROJECT_NO, HOURS_WORKED, PROJECT_NAME
+
+Assume (EMPNO, PROJECT_NO) is the Composite Primary Key. Suggest how to normalize this.
+
+ANSWER:
+1. Current Status:
+The table is in 1NF. However, it violates 2nd Normal Form (2NF) because of a "Partial Dependency". The PROJECT_NAME depends only on PROJECT_NO, not on the EMPNO.
+
+2. Solution (Moving to 2nd Normal Form - 2NF):
+We split the table so every column depends on the full primary key:
+
+Table A: WORKS_ON
+Columns: EMPNO, PROJECT_NO, HOURS_WORKED
+
+Table B: PROJECT_DETAILS
+Columns: PROJECT_NO, PROJECT_NAME
+---------------------------------------------------------
